@@ -6,7 +6,7 @@
             <img src="{{ asset('public/admin-iffi/images/nfdc-logo.png') }}" alt="" class="img-fluid"
                 style=" width:110px">
         </a> --}}
-        <h3 style="color:white">WAVE-PORTAL</h3>
+        <h3 style="color:white">FILMBAZAAR</h3>
         <!-- Light Logo-->
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
