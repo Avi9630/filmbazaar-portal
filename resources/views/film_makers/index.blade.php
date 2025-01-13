@@ -35,8 +35,8 @@
         <div class="row mt-3">
             <!-- Status Search -->
             <div class="col-md-4">
-                <label for="status">Status</label>
-                <select id="status" name="status" class="form-control" style="width: 100%">
+                <label for="statusdata">Status</label>
+                <select id="statusdata" name="status" class="form-select" style="width: 100%">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>New</option>
                     <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Active</option>

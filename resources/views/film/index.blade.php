@@ -15,7 +15,7 @@
         <!-- Sector Search -->
         <div class="col-md-4">
             <label for="sector">Sector</label>
-            <select id="sector" name="sector" class="form-control">
+            <select id="sector" name="sector" class="form-select">
                 <option value="">All Sectors</option>
                 @foreach ($sectors as $sector)
                 <option value="{{ $sector['id'] }}" {{ request('sector') == $sector['id'] ? 'selected' : '' }}>
@@ -27,8 +27,8 @@
 
         <!-- Status Search -->
         <div class="col-md-4">
-            <label for="status">Status</label>
-            <select id="status" name="status" class="form-control">
+            <label for="statusdata">Status</label>
+            <select id="statusdata" name="status" class="form-select">
                 <option value="">All Status</option>
                 <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>New</option>
                 <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Active</option>

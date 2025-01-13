@@ -20,7 +20,7 @@
         <!-- Sector Search -->
         <div class="col-md-4">
             <label for="sector">Sector</label>
-            <select id="sector" name="sector" class="form-control">
+            <select id="sector" name="sector" class="form-select">
                 <option value="">All Sectors</option>
                 @foreach ($sectors as $sector)
                 <option value="{{ $sector['id'] }}" {{ request('sector') == $sector['id'] ? 'selected' : '' }}>
@@ -31,18 +31,17 @@
         </div>
     </div>
 
-    <div class="row mt-3">
-        <!-- Status Search -->
-        <div class="col-md-4">
-            <label for="status">Status</label>
-            <select id="status" name="status" class="form-control" style="width: 100%">
-                <option value="">All Status</option>
-                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>New</option>
-                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Active</option>
-                <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Deactivated</option>
-            </select>
-        </div>
+    <!-- Status Search -->
+    <div class="col-md-4">
+        <label for="statusdata">Status</label>
+        <select id="statusdata" name="status" class="form-control">
+            <option value="">All Status</option>
+            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>New</option>
+            <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Active</option>
+            <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Deactivated</option>
+        </select>
     </div>
+
 
     <!-- Submit Button -->
     <div class="col-md-12 mt-3">
