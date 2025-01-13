@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\FilmMakerController;
+use App\Http\Controllers\FilmController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmotController;
 use App\Http\Controllers\RoleController;
@@ -26,6 +28,14 @@ Route::get('changePassword',      [AuthController::class, 'changePasswordView'])
 Route::post('changePassword',     [AuthController::class, 'changePassword'])->name('changePassword');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::prefix('film-makers')->name('film_makers.')->group(function () {
+        Route::get('/', [FilmMakerController::class, 'index'])->name('index');  // Listing Page
+        Route::get('/{id}', [FilmMakerController::class, 'show'])->name('show');  // Details Page
+    });
+    Route::prefix('film')->name('film.')->group(function () {
+        Route::get('/', [FilmController::class, 'index'])->name('fimindex');  // Listing Page
+        Route::get('/{id}', [FilmController::class, 'show'])->name('filmshow');  // Details Page
+    });
 
     Route::get('/',                 [WelcomeController::class, 'index']);
     Route::get('home',              [AuthController::class, 'home'])->name('home');
@@ -41,7 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('user-search',       'search')->name('user.search');
     });
     Route::get('permission_search',     [PermissionController::class, 'search'])->name('permissions.search');
-
 });
 
 // Route::get('social-media', function () {

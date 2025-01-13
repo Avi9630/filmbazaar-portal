@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumni;
-use App\Models\Cmot;
-use App\Models\CmotCategory;
-use App\Models\CmotJuryAssign;
-use App\Models\DdApplicationForm;
-use App\Models\IpApplicationForm;
-use App\Models\OttForm;
-use App\Models\UserAlumniPreference;
-use Illuminate\Http\Request;
+use App\Models\Film;
+use App\Models\FilmMaker;
+use App\Models\FilmBuyer;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class WelcomeController extends Controller
 {
@@ -20,130 +15,60 @@ class WelcomeController extends Controller
         $this->user = Auth::user();
     }
 
-    public function index (){
-        return view('welcome');
-    }
-
-    public function indexOld()
+    public function index()
     {
-        //IP
-        $ipCounts = IpApplicationForm::selectRaw('
-                    COUNT(*) as totalForms,
-                    SUM(step = 9) as paidForms,
-                    SUM(category = 1) as featured,
-                    SUM(category = 2) as nonFeatured,
-                    SUM(CASE WHEN category = 1 AND step = 9 THEN 1 ELSE 0 END) AS featureCount,
-                    SUM(CASE WHEN category = 2 AND step = 9 THEN 1 ELSE 0 END) AS nonFeaturedCount
-                ')->first();
-        $totalIpForms       =   $ipCounts->totalForms;
-        $paidIpForms        =   $ipCounts->paidForms;
-        $featuredIp         =   $ipCounts->featured;
-        $nonFeaturedIp      =   $ipCounts->nonFeatured;
-        $featureCount       =   $ipCounts->featureCount;
-        $nonFeaturedCount   =   $ipCounts->nonFeaturedCount;
+        $dates = [];
+        $filmCounts = [];
+        $filmMakerCounts = [];
+        $filmBuyerCounts = [];
 
-        //OTT
-        $ottCounts = OttForm::selectRaw('
-                    COUNT(*) as totalForms,
-                    SUM(step = 8) as paidForms
-                ')->first();
+        // Loop through the past 7 days
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i)->format('Y-m-d');
+            $dates[] = $date;
 
-        $totalOttForms   =   $ottCounts->totalForms;
-        $paidOttForms    =   $ottCounts->paidForms;
-
-        //CMOT
-        $cmotCounts = Cmot::selectRaw('
-                    COUNT(*) as totalEntries,
-                    SUM(step = 5) as completeForm,
-                    SUM(stage = 1) as assignedToLevel1,
-                    SUM(stage = 2) as feedbackByLevel1,
-                    SUM(stage = 3) as assignedToLevel2,
-                    SUM(stage = 4) as feedbackByLevel2,
-                    SUM(step = 5 AND (stage IS NULL OR stage = 0 OR stage = "")) as yetToAssign
-                ')->first();
-
-        $totalEntries       =   $cmotCounts->totalEntries;
-        $cmotCompleteForm   =   $cmotCounts->completeForm;
-        $assignedToLevel1   =   $cmotCounts->assignedToLevel1;
-        $feedbackByLevel1   =   $cmotCounts->feedbackByLevel1;
-        $assignedToLevel2   =   $cmotCounts->assignedToLevel2;
-        $feedbackByLevel2   =   $cmotCounts->feedbackByLevel2;
-        $yetToAssign        =   $cmotCounts->yetToAssign;
-
-        //DD
-        $ddCounts = DdApplicationForm::selectRaw('
-                    COUNT(*) as totalForms,
-                    SUM(step = 9) as paidForms
-                ')->first();
-        $totalDdForms   =   $ddCounts->totalForms;
-        $paidDdForms    =   $ddCounts->paidForms;
-
-        $totalAssignedToLevel1 = [];
-        $totalAssignedToLevel2 = [];
-        $marksGivenByLevel1 = [];
-        $marksGivenByLevel2 = [];
-
-        if (Auth::user()->hasRole('JURY')) {
-            $totalAssignedToLevel1 = CmotJuryAssign::select('*')->where('user_id', Auth::user()->id)->get();
-            $cmotids = [];
-            foreach ($totalAssignedToLevel1 as $totalAssigned) {
-                $cmotids[] = $totalAssigned['cmot_id'];
-            }
-            $marksGivenByLevel1 = Cmot::whereIn('id', $cmotids)
-                ->where('stage', 2)
-                ->pluck('id');
+            // Get the count of films and film makers for the specific date
+            $filmCounts[] = Film::whereDate('createdAt', $date)->count();
+            $filmMakerCounts[] = FilmMaker::whereDate('createdAt', $date)->count();
+            $filmBuyerCounts[] = FilmBuyer::whereDate('createdAt', $date)->count();
         }
 
-        if (Auth::user()->hasRole('GRANDJURY')) {
-            $totalAssignedToLevel2 = CmotJuryAssign::select('*')->where('user_id', Auth::user()->id)->get();
-            $cmotids = [];
-            foreach ($totalAssignedToLevel2 as $totalAssigned) {
-                $cmotids[] = $totalAssigned['cmot_id'];
-            }
-            $marksGivenByLevel2 = Cmot::whereIn('id', $cmotids)
-                ->where('stage', 4)
-                ->pluck('id');
+        // Calculate total counts
+        $totalFilms = Film::count();
+        $totalFilmMakers = FilmMaker::count();
+        $totalFilmMakers = FilmMaker::count();
+        $totalFilmBuyers  = FilmBuyer::count();
+
+
+        $sectors = [
+            ['id' => 1, 'name' => 'Film'],
+            ['id' => 2, 'name' => 'TV'],
+            ['id' => 3, 'name' => 'Gaming and Esports'],
+            ['id' => 4, 'name' => 'Radio and Podcasts'],
+            ['id' => 5, 'name' => 'Music and Sound'],
+            ['id' => 6, 'name' => 'Internet Advertising'],
+            ['id' => 7, 'name' => 'Influencer Marketing'],
+            ['id' => 8, 'name' => 'Out of Home Media'],
+            ['id' => 9, 'name' => 'AVGC-XR'],
+            ['id' => 10, 'name' => 'Print (Newspapers, Magazine)'],
+            ['id' => 11, 'name' => 'Live Event'],
+            ['id' => 12, 'name' => 'Startup'],
+            ['id' => 13, 'name' => 'AR/VR']
+        ];
+
+        $sectorWiseData = [];
+
+        // Loop through each sector to get the counts for film makers and film buyers
+        foreach ($sectors as $sector) {
+            $sectorWiseData[$sector['id']] = [
+                'sector' => $sector['name'],
+                'filmMakers' => FilmMaker::whereJsonContains('sectors', $sector['id'])->count(),
+                'filmBuyers' => FilmBuyer::whereJsonContains('segments', $sector['id'])->count(),
+                'film' => Film::where('category', $sector['id'])->count(),
+            ];
         }
 
-        $categories = CmotCategory::all();
-        foreach ($categories as $category) {
-            $categoryCounts[$category->name] = Cmot::where('category_id', $category->id)->count();
-        }
-
-        return view('welcome', [
-            //IP
-            'totalIpForms'      =>  $totalIpForms,
-            'paidIpForms'       =>  $paidIpForms,
-            'featuredIp'        =>  $featuredIp,
-            'nonFeaturedIp'     =>  $nonFeaturedIp,
-            'featureCount'      =>  $featureCount,
-            'nonFeaturedCount'  =>  $nonFeaturedCount,
-            //OTT
-            'totalOttForms' =>  $totalOttForms,
-            'paidOttForms'  =>  $paidOttForms,
-            //CMOT
-            'totalEntries'      =>  $totalEntries,
-            'cmotCompleteForm'  =>  $cmotCompleteForm,
-            'assignedToLevel1'  =>  $assignedToLevel1,
-            "feedbackByLevel1"  =>  $feedbackByLevel1,
-            "assignedToLevel2"  =>  $assignedToLevel2,
-            "feedbackByLevel2"  =>  $feedbackByLevel2,
-            'categoryCounts'    =>  $categoryCounts,
-            'yetToAssign'    =>  $yetToAssign,
-
-            //DD
-            'totalDdForms' =>  $totalDdForms,
-            'paidDdForms'  =>  $paidDdForms,
-
-            //JURY
-            'totalAssignedToLevel1' => $totalAssignedToLevel1,
-            'marksGivenByLevel1'    => $marksGivenByLevel1,
-            //GRAND-JURY
-            'totalAssignedToLevel2' => $totalAssignedToLevel2,
-            'marksGivenByLevel2'    => $marksGivenByLevel2,
-
-            //RECRUITER
-            // 'alumniRecords' => $alumniRecords,
-        ]);
+        // Pass data to the view
+        return view('welcome', compact('sectorWiseData', 'totalFilmBuyers', 'filmBuyerCounts', 'dates', 'filmCounts', 'filmMakerCounts', 'totalFilms', 'totalFilmMakers'));
     }
 }
