@@ -2,22 +2,17 @@
 
 @section('content')
 <div class="innerpage mt-3">
-    <div class="row">
+    <div class="page-title"><h2>Seller Profile Detail</h2></div>
+    <div class="row card">
        
-        <div class="col-md-9 col-sm-9">
-            <div class="page-title"><h2>Seller Profile Detail</h2></div>
+       
+
             <div class="tab-content1">
                 <div>
                     <div class="shadow-sm white-bg mb-3">
                         <div>
                             <div class="row g-0 overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
-                                {{-- <div class="col-auto d-lg-block">
-                                    @if($filmMaker->profile_img)
-                                        <img src="{{ asset('file/read/' . $filmMaker->profile_img->url) }}" alt="{{ $filmMaker->profile_img->name }}" class="user-img" />
-                                    @else
-                                        <img src="{{ asset('default-img.jpg') }}" alt="user" class="user-img" />
-                                    @endif
-                                </div> --}}
+                           
                                 <div class="col p-4 d-flex flex-column position-static pt-0">
                                     <h3 class="d-inline-block mb-2 text-primary-emphasis font-18">{{ $filmMaker->first_name }}</h3>
                                     <div class="mb-1 text-body-secondary">
@@ -186,8 +181,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> 
+      
     </div>
 </div>
 

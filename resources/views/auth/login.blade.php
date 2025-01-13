@@ -7,7 +7,7 @@
 
                     <div class="text-center mt-2">
                         <h5 class="text-primary">Welcome Back !</h5>
-                        <p class="text-muted">Sign in to continue to iffi.</p>
+                        <p class="text-muted">Sign in to continue to Online Film Bazaar.</p>
                         <span>
                             <h4 class="alert-danger"></h4>
                         </span>

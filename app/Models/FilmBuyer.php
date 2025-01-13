@@ -9,4 +9,9 @@ class FilmBuyer extends Model
     //
     protected $guarded = [];
     protected $table = 'film_buyers';
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
