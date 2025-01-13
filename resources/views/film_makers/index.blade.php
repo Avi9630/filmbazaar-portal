@@ -11,13 +11,13 @@
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ request('name') }}">
             </div>
-            
+    
             <!-- Email Search -->
             <div class="col-md-4">
                 <label for="email">Email</label>
                 <input type="text" id="email" name="email" class="form-control" value="{{ request('email') }}">
             </div>
-            
+    
             <!-- Sector Search -->
             <div class="col-md-4">
                 <label for="sector">Sector</label>
@@ -30,15 +30,13 @@
                     @endforeach
                 </select>
             </div>
-    
-            <!-- Status Search -->
-            
         </div>
-        
+    
         <div class="row mt-3">
+            <!-- Status Search -->
             <div class="col-md-4">
                 <label for="status">Status</label>
-                <select id="status" name="status" class="form-control" style="width: 100%" >
+                <select id="status" name="status" class="form-control" style="width: 100%">
                     <option value="">All Status</option>
                     <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>New</option>
                     <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Active</option>
@@ -46,12 +44,16 @@
                 </select>
             </div>
         </div>
-        
+    
+        <!-- Submit Button -->
         <div class="col-md-12 mt-3">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
+    
+        <!-- Hidden Inputs to Retain Pagination -->
+        <input type="hidden" name="page" value="{{ request('page') }}">
     </form>
+    
 
     <!-- Film Makers Table -->
     <table class="table table-bordered">

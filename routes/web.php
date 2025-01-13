@@ -3,6 +3,7 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\FilmMakerController;
+use App\Http\Controllers\FilmBuyerController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmotController;
@@ -35,6 +36,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('film')->name('film.')->group(function () {
         Route::get('/', [FilmController::class, 'index'])->name('fimindex');  // Listing Page
         Route::get('/{id}', [FilmController::class, 'show'])->name('filmshow');  // Details Page
+    });
+    Route::prefix('film-buyer')->name('film_buyer.')->group(function () {
+        Route::get('/', [FilmBuyerController::class, 'index'])->name('index');  // Listing Page
+        Route::get('/{id}', [FilmBuyerController::class, 'show'])->name('show');  // Details Page
     });
 
     Route::get('/',                 [WelcomeController::class, 'index']);
