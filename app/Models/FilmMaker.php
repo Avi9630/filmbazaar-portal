@@ -9,4 +9,9 @@ class FilmMaker extends Model
     //
     protected $guarded = [];
     protected $table = 'film_makers';
+    
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

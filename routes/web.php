@@ -6,11 +6,9 @@ use App\Http\Controllers\FilmMakerController;
 use App\Http\Controllers\FilmBuyerController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CmotController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Counter;
 
 Route::group(['middleware' => 'guest'], function () {
     Route::controller(AuthController::class)->group(function () {
@@ -29,6 +27,7 @@ Route::get('changePassword',      [AuthController::class, 'changePasswordView'])
 Route::post('changePassword',     [AuthController::class, 'changePassword'])->name('changePassword');
 
 Route::group(['middleware' => 'auth'], function () {
+
     Route::prefix('film-makers')->name('film_makers.')->group(function () {
         Route::get('/', [FilmMakerController::class, 'index'])->name('index');  // Listing Page
         Route::get('/{id}', [FilmMakerController::class, 'show'])->name('show');  // Details Page
@@ -57,10 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::get('permission_search',     [PermissionController::class, 'search'])->name('permissions.search');
 });
-
-// Route::get('social-media', function () {
-//     return view('social-media');
-// });
 
 Route::fallback(function () {
     return abort(401, "User can't perform this action.");

@@ -10,9 +10,9 @@ class Language extends Model
     use HasFactory;
     protected  $table = 'languages';
 
-    public function ipApplicationForms()
+    public function films()
     {
-        return $this->hasMany(IpApplicationForm::class, 'language_id');
+        return $this->belongsToMany(Film::class);
     }
 
 }

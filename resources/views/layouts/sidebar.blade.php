@@ -29,6 +29,57 @@
 
                         @can('list-user')
                             <li class="nav-item">
+                                <a class="nav-link menu-link" href="#film-maker" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="film-maker">
+                                    <i class="ri-user-2-line"></i> <span data-key="">FILM-MAKER</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="film-maker">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{ route('film_makers.index') }}" class="nav-link" data-key="">LIST
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        @endcan
+
+                        @can('list-user')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="#film" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="film">
+                                    <i class="ri-user-2-line"></i> <span data-key="">FILM</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="film">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{ route('film.fimindex') }}" class="nav-link" data-key="">LIST
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        @endcan
+
+                        @can('list-user')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="#film-buyer" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="film-buyer">
+                                    <i class="ri-user-2-line"></i> <span data-key="">FILM-BUYER</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="film-buyer">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{ route('film_buyer.index') }}" class="nav-link" data-key="">LIST
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        @endcan
+
+                        @can('list-user')
+                            <li class="nav-item">
                                 <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
                                     aria-expanded="false" aria-controls="sidebarUser">
                                     <i class="ri-user-2-line"></i> <span data-key="">USERS</span>

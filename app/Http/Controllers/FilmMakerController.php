@@ -22,10 +22,10 @@ class FilmMakerController extends Controller
         ['id' => 12, 'name' => 'Startup'],
         ['id' => 13, 'name' => 'AR/VR']
     ];
+
     // Function to list Film Makers with Pagination and Search
     public function index(Request $request)
     {
-
         $search = trim($request->input('name'));
         $email = trim($request->input('email'));
         $sector = trim($request->input('sector'));
@@ -78,6 +78,7 @@ class FilmMakerController extends Controller
 
         return view('film_makers.index', compact('filmMakers', 'sectors'));
     }
+
     private function mapSectors(array $sectorIds)
     {
         return collect($sectorIds)->map(function ($sectorId) {
@@ -85,12 +86,12 @@ class FilmMakerController extends Controller
             return $sector ? $sector['name'] : 'Unknown';
         })->implode(', ');
     }
+
     // Function to show Film Maker details
     public function show($id)
     {
         // Fetch Film Maker details by ID
         $filmMaker = FilmMaker::findOrFail($id);
-
         return view('film_makers.show', compact('filmMaker'));
     }
 }

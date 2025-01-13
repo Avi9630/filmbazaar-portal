@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Film Makers List</h1>
+<h1>Film List</h1>
 
 <!-- Search Form -->
 <form method="GET" action="{{ route('film_makers.index') }}">
@@ -60,13 +60,20 @@
     </thead>
     <tbody>
         @foreach($films as $film)
+        
         <tr>
             <td>{{ $film->id }}</td>
             <td>{{ $film->title }}</td>
-            <td>{{ $film->category }}</td>
-            <td>{{ $film->language }}</td>
-            <td>{{ $film->country }}</td>
-            <td>{{ $film->duration }}</td>
+            <td>{{ $film->category }}</td>            
+            
+            <td>{{ implode(', ', $film::languages($film->language)) }}</td>
+
+            <td>{{ implode(', ', $film::countries($film->country)) }}</td>
+
+            {{-- <td>{{ $film->country->name }}</td> --}}
+            
+            <td>{{ !empty($film->duration) ? $film->duration . ' min': '' }} </td>
+            
             <td>
                 @if ($film->status == 1)
                 New

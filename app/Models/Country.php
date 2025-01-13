@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     protected $guarded = [];
+    protected $table = 'countries';
 
-    public function permanentCmots()
+    public function filmMakers()
     {
-        return $this->hasOne(Cmot::class, 'permanent_country_id');
-    }
-
-    public function residenceCmots()
-    {
-        return $this->hasOne(Cmot::class, 'residence_country_id');
+        return $this->hasMany(FilmMaker::class);
     }
 }

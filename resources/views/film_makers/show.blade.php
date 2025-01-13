@@ -110,7 +110,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Country:</th>
-                                                    {{-- <td>{{ getCountryNames($filmMaker->country_id) }}</td> --}}
+                                                    <td>{{ $filmMaker->country->name }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
