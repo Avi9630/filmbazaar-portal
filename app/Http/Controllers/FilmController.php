@@ -26,7 +26,7 @@ class FilmController extends Controller
             ['id' => 13, 'name' => 'AR/VR']
         ];
     }
-    
+
     // Function to list Film Makers with Pagination and Search
     public function index(Request $request)
     {
@@ -39,12 +39,13 @@ class FilmController extends Controller
             return $query->where('title', 'like', '%' . $search . '%');
         })
             ->when($sector, function ($query, $sector) {
-                return $query->where('sector_id', $sector); // Assuming 'sector_id' is the column for sectors
+                return $query->where('category', $sector); // Assuming 'sector_id' is the column for sectors
             })
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
-            ->paginate(15);
+            ->orderBy('id', 'DESC') // Order by ID in descending order
+            ->paginate(20);
 
         // Map sectors if needed
         foreach ($films as $film) {

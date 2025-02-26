@@ -8,21 +8,7 @@ function confirmDelete() {
 }
 
 function toggleCategoryField() {
-    var roleId = document.getElementById("role_id").value;
-    var categoryField = document.getElementById("categoryField");
-    var productionHouse = document.getElementById("productionHouse");
 
-    if (roleId == 3 || roleId == 4) {
-        categoryField.style.display = "block";
-    } else {
-        categoryField.style.display = "none";
-    }
-
-    if (roleId == 13) {
-        productionHouse.style.display = "block";
-    } else {
-        productionHouse.style.display = "none";
-    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

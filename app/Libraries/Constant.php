@@ -19,7 +19,12 @@ class Constant
 
     static function companyType()
     {
-        $data = [['id' => 1, 'name' => 'Producer'], ['id' => 2, 'name' => 'Agency'], ['id' => 3, 'name' => 'Platform'], ['id' => 4, 'name' => 'Others']];
+        $data = [
+            1 => 'Producer',
+            2 => 'Agency',
+            3 => 'Platform',
+            4 => 'Others',
+        ];
         return $data;
     }
 
@@ -30,7 +35,7 @@ class Constant
     }
     static function stageType()
     {
-        
+
         $data = [['id' => 1, 'name' => 'Script'], ['id' => 2, 'name' => 'Co-Production'], ['id' => 3, 'name' => 'Work In Progress'], ['id' => 4, 'name' => 'Film Ready For Distribution'], ['id' => 5, 'name' => 'Work In Progress'], ['id' => 6, 'name' => 'Completed']];
         return $data;
     }
@@ -69,6 +74,25 @@ class Constant
     static function category()
     {
         $data = [['id' => 1, 'name' => 'Film'], ['id' => 2, 'name' => 'TV'], ['id' => 3, 'name' => 'Gaming and Esports'], ['id' => 4, 'name' => 'Radio and Podcasts'], ['id' => 5, 'name' => 'Music and Sound'], ['id' => 6, 'name' => 'Internet Advertising'], ['id' => 7, 'name' => 'Influencer Marketing'], ['id' => 8, 'name' => 'Out of Home Media'], ['id' => 9, 'name' => 'AVGC-XR'], ['id' => 10, 'name' => 'Print (Newspapers, Magazine)'], ['id' => 11, 'name' => 'Live Event'], ['id' => 12, 'name' => 'Startup'], ['id' => 13, 'name' => 'AR/VR']];
+        return $data;
+    }
+    static function categories()
+    {
+        $data = [
+            1 => 'Film',
+            2 => 'TV',
+            3 => 'Gaming and Esports',
+            4 => 'Radio and Podcasts',
+            5 => 'Music and Sound',
+            6 => 'Internet Advertising',
+            7 => 'Influencer Marketing',
+            8 => 'Out of Home Media',
+            9 => 'AVGC-XR',
+            10 => 'Print (Newspapers, Magazine)',
+            11 => 'Live Event',
+            12 => 'Startup',
+            13 => 'AR/VR'
+        ];
         return $data;
     }
 }

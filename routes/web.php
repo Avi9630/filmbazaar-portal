@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('film-makers')->name('film_makers.')->group(function () {
         Route::get('/', [FilmMakerController::class, 'index'])->name('index');  // Listing Page
         Route::get('/{id}', [FilmMakerController::class, 'show'])->name('show');  // Details Page
+        Route::post('/update-status', [FilmMakerController::class, 'updateStatus'])->name('update.status');
     });
     Route::prefix('film')->name('film.')->group(function () {
         Route::get('/', [FilmController::class, 'index'])->name('fimindex');  // Listing Page
@@ -39,9 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('film-buyer')->name('film_buyer.')->group(function () {
         Route::get('/', [FilmBuyerController::class, 'index'])->name('index');  // Listing Page
         Route::get('/{id}', [FilmBuyerController::class, 'show'])->name('show');  // Details Page
+        Route::post('/update-status', [FilmBuyerController::class, 'updateStatus'])->name('update.status');
     });
 
-    Route::get('/',                 [WelcomeController::class, 'index']);
+    Route::get('/',                 [WelcomeController::class, 'index'])->name('dashboard');
     Route::get('home',              [AuthController::class, 'home'])->name('home');
     Route::get('logout',            [AuthController::class, 'logout'])->name('logout');
 

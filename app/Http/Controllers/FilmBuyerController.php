@@ -34,18 +34,20 @@ class FilmBuyerController extends Controller
         $FilmBuyers = FilmBuyer::when($search, function ($query, $search) {
             return $query->where(function ($query) use ($search) {
                 $query->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%');
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $search . '%']);
             });
         })
             ->when($email, function ($query, $email) {
                 return $query->where('email', 'like', '%' . $email . '%');
             })
             ->when($sector, function ($query, $sector) {
-                return $query->whereJsonContains('segments', $sector);
+                return $query->whereJsonContains('segments', (int)$sector);
             })
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+            ->orderBy('id', 'DESC') // Order by ID in descending order
             ->paginate(20)
             ->appends($request->all());  // ✅ Preserve filters across pages
 
@@ -76,5 +78,27 @@ class FilmBuyerController extends Controller
         $FilmBuyer = FilmBuyer::findOrFail($id);
 
         return view('film_buyer.show', compact('FilmBuyer'));
+    }
+    public function updateStatus(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'id' => 'required|integer|exists:film_buyers,id', // Ensure the ID exists in the film_buyers table
+            'status' => 'required|integer'
+        ]);
+
+        // Fetch Film Buyer details by ID
+        $FilmBuyer = FilmBuyer::findOrFail($request->id);
+
+        // Update the status
+        $FilmBuyer->status = $request->status;
+        if (!empty($request->reason))
+            $FilmBuyer->reason   = $request->reason;
+        if (!empty($request->reason_type))
+            $FilmBuyer->reason_type = $request->reason_type;
+        $FilmBuyer->save();
+
+        // Return a success response
+        return response()->json(['message' => 'Status updated successfully'], 200);
     }
 }

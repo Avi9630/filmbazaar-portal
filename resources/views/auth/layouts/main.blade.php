@@ -32,7 +32,7 @@
                                     <img src="{{ asset('public/admin-iffi/images/nfdc-logo.png') }}" alt=""
                                         height="100">
                                 </a> --}}
-                                <h1 style="color: white">FILMBAZAAR-PORTAL</h1>
+                                <h1 style="color: white">WAVESBAZAAR-PORTAL</h1>
                             </div>
                         </div>
                     </div>

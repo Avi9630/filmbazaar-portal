@@ -6,6 +6,7 @@ use App\Libraries\Constant;
 // use Illuminate\Container\Attributes\DB;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+
 class Film extends Model
 {
     protected $guarded = [];
@@ -161,8 +162,10 @@ class Film extends Model
         foreach ($printFormat as $print) {
             $printFormatAssociations[$print['id']] = $print['name'];
         }
-        $data = $printFormatAssociations[$id];
-        return $data;
+        if (!empty($printFormatAssociations[$id])) {
+            $data = $printFormatAssociations[$id];
+            return $data;
+        }
     }
 
     static function formatType($id)
