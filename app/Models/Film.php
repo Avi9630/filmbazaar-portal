@@ -11,7 +11,10 @@ class Film extends Model
 {
     protected $guarded = [];
     protected $table = 'films';
-
+    public function documents()
+    {
+        return $this->hasMany(FilmDocument::class, 'film_id', 'id'); // Corrected relationship
+    }
     public function country()
     {
         return $this->belongsTo(Country::class);

@@ -8,6 +8,8 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AllowedBuyerController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'guest'], function () {
@@ -27,6 +29,7 @@ Route::get('changePassword',      [AuthController::class, 'changePasswordView'])
 Route::post('changePassword',     [AuthController::class, 'changePassword'])->name('changePassword');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('allowedbuyers', AllowedBuyerController::class);
 
     Route::prefix('film-makers')->name('film_makers.')->group(function () {
         Route::get('/', [FilmMakerController::class, 'index'])->name('index');  // Listing Page

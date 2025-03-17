@@ -72,6 +72,8 @@ class FilmController extends Controller
     public function show($id)
     {
         $film = Film::findOrFail($id);
-        return view('film.show', compact('film'));
+        $FilmMaker = FilmMaker::findOrFail($film->film_maker_id);
+        $other_details = json_decode($film->other_details);
+        return view('film.show', compact('film', 'FilmMaker', 'other_details'));
     }
 }
