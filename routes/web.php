@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('film')->name('film.')->group(function () {
         Route::get('/', [FilmController::class, 'index'])->name('fimindex');  // Listing Page
         Route::get('/{id}', [FilmController::class, 'show'])->name('filmshow');  // Details Page
+        Route::post('/update-status', [FilmController::class, 'updateStatus'])->name('update.status');
     });
     Route::prefix('film-buyer')->name('film_buyer.')->group(function () {
         Route::get('/', [FilmBuyerController::class, 'index'])->name('index');  // Listing Page

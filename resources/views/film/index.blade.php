@@ -89,7 +89,22 @@
                 @endif
             </td>
             <td>
-                <a href="{{ route('film.filmshow', $film->id) }}">View Details</a>
+
+                <a class="btn  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ri-more-fill"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('film.filmshow', $film->id) }}">View Details</a></li>
+                    @if ($film->status == 2)
+                    <li><button class="dropdown-item inactive" data-id="{{ $film->id }}"> Deactivate</button></li>
+                    @endif
+
+                    @if ($film->status == 3)
+                    <li><button class="dropdown-item activate" data-id="{{ $film->id }}">Activate</button></li>
+                    @endif
+
+
+                </ul>
             </td>
         </tr>
         @endforeach
@@ -98,6 +113,64 @@
 
 <!-- Pagination Links -->
 <div>
-    {{ $films->links() }}
+    {{ $films->appends(request()->query())->links() }}
+
 </div>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<script>
+    $(document).ready(function() {
+        // Handle deactivate button click
+
+
+
+        // Handle activate button click
+        $(".activate").click(function(e) {
+            e.preventDefault();
+            const id = $(this).data("id"); // Fetch the ID
+            const status = 2; // Set status for activation
+
+            $.ajax({
+                url: '{{ route("film.update.status") }}', // Set the correct route
+                type: 'POST', // Use POST for updating data
+                data: {
+                    id: id,
+                    status: status,
+                    _token: $('meta[name="csrf-token"]').attr('content') // Add CSRF token
+                },
+                success: function(response) {
+                    alert('Status updated successfully!');
+                    window.location.reload();
+
+                },
+                error: function(xhr) {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+        $(".inactive").click(function(e) {
+            e.preventDefault();
+            const id = $(this).data("id"); // Fetch the ID
+            const status = 3; // Set status for activation
+
+            $.ajax({
+                url: '{{ route("film.update.status") }}', // Set the correct route
+                type: 'POST', // Use POST for updating data
+                data: {
+                    id: id,
+                    status: status,
+                    _token: $('meta[name="csrf-token"]').attr('content') // Add CSRF token
+                },
+                success: function(response) {
+                    alert('Status updated successfully!');
+                    window.location.reload();
+
+                },
+                error: function(xhr) {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>
 @endsection

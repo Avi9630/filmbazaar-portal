@@ -6,24 +6,60 @@
         <tr>
                     <th colspan="2" style=" background: #462965; color: white;">Basic Information</th>
         </tr>
-            <tr>
+            <!-- <tr>
                 <td><strong>Film Maker ID</strong></td>
                 <td>{{ $film->film_maker_id }}</td>
-            </tr>
+            </tr> -->
             <tr>
                 <td><strong>Title</strong></td>
                 <td>{{ $film->title }}</td>
             </tr>
-            <tr>
-                <td><strong>Segment Type</strong></td>
-                <td>To do</td>
-            </tr>
-            <tr>
-                <td><strong>Category </strong></td>
-                <td>To do</td>
-            </tr>
+            @php
+    // Define category segments
+    $categories = [
+        1 => "Film",
+        2 => "TV/Webseries",
+        3 => "Gaming and Esports",
+        4 => "Radio and Podcasts",
+        5 => "Music and Sound",
+        6 => "Advertising",
+        7 => "Influencer Marketing",
+        8 => "Comics Or Graphics",
+        9 => "Animation & VFX Services",
+        10 => "Print (Newspapers, Magazine)",
+        11 => "Live Event",
+        13 => "AR/VR",
+    ];
+
+    // Get the category name based on $film->category
+    $segment = isset($film->category) && isset($categories[$film->category]) 
+        ? $categories[$film->category] 
+        : 'NA';
+@endphp
+
+<tr>
+    <td><strong>Segment</strong></td>
+    <td>{{ $segment }}</td>
+</tr>
            
 
+            @php
+    // Define category types
+    $categoryTypes = [
+        1 => "Animation",
+        2 => "VFX",
+    ];
+
+    // Get the category type based on $film->category_type
+    $category = isset($other_details->category_type) && isset($categoryTypes[$other_details->category_type]) 
+        ? $categoryTypes[$other_details->category_type] 
+        : 'NA';
+@endphp
+
+<tr>
+    <td><strong>Category</strong></td>
+    <td>{{ $category }}</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -163,6 +199,43 @@
                 <td><strong>At Waves Portal You are Looking For</strong></td>
                 <td>To do</td>
             </tr>
+
+            @php
+    // Define options for "Looking For"
+    $lookingForOptions = [
+        1 => "Gaming companies",
+        2 => "Ad agencies",
+        3 => "Film Production companies",
+        4 => "International studios",
+        5 => "Others",
+    ];
+
+    // Convert looking_for to an array (handles cases where it's stored as a string)
+    $lookingFor = isset($other_details->looking_for) ? (is_array($other_details->looking_for) ? $other_details->looking_for : explode(',', $other_details->looking_for)) : [];
+
+    // Get selected options
+    $selectedOptions = [];
+    foreach ($lookingFor as $key) {
+        $key = (int) $key; // Ensure it's an integer
+        if (isset($lookingForOptions[$key])) {
+            $selectedOptions[] = $lookingForOptions[$key];
+        }
+    }
+
+    // If "Others" is selected, append the "please_specify_looking_for" value
+    if (in_array(5, $lookingFor) && !empty($other_details->please_specify_looking_for)) {
+        $selectedOptions[] = $other_details->please_specify_looking_for;
+    }
+
+    // Final output
+    $lookingForText = !empty($selectedOptions) ? implode(', ', $selectedOptions) : 'NA';
+@endphp
+
+<tr>
+    <td><strong>At Waves Portal You are Looking For</strong></td>
+    <td>{{ $lookingForText }}</td>
+</tr>
+
         </tbody>
     </table>
 </div>

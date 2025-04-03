@@ -7,20 +7,22 @@ use Illuminate\Http\Request;
 
 class FilmMakerController extends Controller
 {
-    private $sectors = [
+    private  $sectors = [
         ['id' => 1, 'name' => 'Film'],
-        ['id' => 2, 'name' => 'TV'],
+        ['id' => 2, 'name' => 'TV/Webseries'],
         ['id' => 3, 'name' => 'Gaming and Esports'],
         ['id' => 4, 'name' => 'Radio and Podcasts'],
         ['id' => 5, 'name' => 'Music and Sound'],
-        ['id' => 6, 'name' => 'Internet Advertising'],
+        ['id' => 6, 'name' => 'Advertising'], // internet and out of home media
         ['id' => 7, 'name' => 'Influencer Marketing'],
-        ['id' => 8, 'name' => 'Out of Home Media'],
-        ['id' => 9, 'name' => 'AVGC-XR'],
+        ['id' => 8, 'name' => 'Comics Or Graphics'],
+        ['id' => 9, 'name' => 'Animation & VFX Services'],
         ['id' => 10, 'name' => 'Print (Newspapers, Magazine)'],
         ['id' => 11, 'name' => 'Live Event'],
-        ['id' => 12, 'name' => 'Startup'],
-        ['id' => 13, 'name' => 'AR/VR']
+        // ['id' => 12, 'name' => 'Startup'],
+        ['id' => 13, 'name' => 'AR/VR'],
+        // ['id' => 14, 'name' => 'Comics Or Graphics'],
+        // ['id' => 15, 'name' => 'Animation']
     ];
 
     // Function to list Film Makers with Pagination and Search
@@ -65,18 +67,20 @@ class FilmMakerController extends Controller
         }
         $sectors = [
             ['id' => 1, 'name' => 'Film'],
-            ['id' => 2, 'name' => 'TV'],
+            ['id' => 2, 'name' => 'TV/Webseries'],
             ['id' => 3, 'name' => 'Gaming and Esports'],
             ['id' => 4, 'name' => 'Radio and Podcasts'],
             ['id' => 5, 'name' => 'Music and Sound'],
-            ['id' => 6, 'name' => 'Internet Advertising'],
+            ['id' => 6, 'name' => 'Advertising'], // internet and out of home media
             ['id' => 7, 'name' => 'Influencer Marketing'],
-            ['id' => 8, 'name' => 'Out of Home Media'],
-            ['id' => 9, 'name' => 'AVGC-XR'],
+            ['id' => 8, 'name' => 'Comics Or Graphics'],
+            ['id' => 9, 'name' => 'Animation & VFX Services'],
             ['id' => 10, 'name' => 'Print (Newspapers, Magazine)'],
             ['id' => 11, 'name' => 'Live Event'],
-            ['id' => 12, 'name' => 'Startup'],
-            ['id' => 13, 'name' => 'AR/VR']
+            // ['id' => 12, 'name' => 'Startup'],
+            ['id' => 13, 'name' => 'AR/VR'],
+            // ['id' => 14, 'name' => 'Comics Or Graphics'],
+            // ['id' => 15, 'name' => 'Animation']
         ];
 
         return view('film_makers.index', compact('filmMakers', 'sectors'));

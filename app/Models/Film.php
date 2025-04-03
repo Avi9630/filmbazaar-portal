@@ -191,4 +191,26 @@ class Film extends Model
         $data = $printFormatAssociations[$id];
         return $data;
     }
+
+    static function filmType($value) 
+    {
+        $filmTypes = [
+            1 => "Documentary Mid-length",
+            2 => "Documentary Short",
+            3 => "Fiction Mid-length",
+            4 => "Fiction Short",
+            5 => "Hybrid Feature",
+            6 => "Fiction Feature",
+            7 => "Documentary Feature",
+            8 => "Animation Feature",
+        ];
+        if (isset($filmTypes[$value])) {
+            return $filmTypes[$value];
+        }
+        return 'Invalid month value';
+
+        
+    }
+
+    
 }

@@ -1,4 +1,5 @@
 <!-- Newspaper -->
+ 
 <div class="table-responsive">
     {{ $film->category}}
     <table class="table table-striped table-list-view">
@@ -14,10 +15,33 @@
                 <td><strong>Title</strong></td>
                 <td>{{ $film->title }}</td>
             </tr>
-            <tr>
-                <td><strong>Segment</strong></td>
-                <td>to do</td>
-            </tr>
+            @php
+    // Define category segments
+    $categories = [
+        1 => "Film",
+        2 => "TV/Webseries",
+        3 => "Gaming and Esports",
+        4 => "Radio and Podcasts",
+        5 => "Music and Sound",
+        6 => "Advertising",
+        7 => "Influencer Marketing",
+        8 => "Comics Or Graphics",
+        9 => "Animation & VFX Services",
+        10 => "Print (Newspapers, Magazine)",
+        11 => "Live Event",
+        13 => "AR/VR",
+    ];
+
+    // Get the category name based on $film->category
+    $segment = isset($film->category) && isset($categories[$film->category]) 
+        ? $categories[$film->category] 
+        : 'NA';
+@endphp
+
+<tr>
+    <td><strong>Segment</strong></td>
+    <td>{{ $segment }}</td>
+</tr>
               
         </tbody>
     </table>
