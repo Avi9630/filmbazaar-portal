@@ -32,9 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('allowedbuyers', AllowedBuyerController::class);
 
     Route::prefix('film-makers')->name('film_makers.')->group(function () {
-        Route::get('/', [FilmMakerController::class, 'index'])->name('index');  // Listing Page
-        Route::get('/{id}', [FilmMakerController::class, 'show'])->name('show');  // Details Page
-        Route::post('/update-status', [FilmMakerController::class, 'updateStatus'])->name('update.status');
+        Route::get('/',                 [FilmMakerController::class, 'index'])->name('index');  // Listing Page
+        Route::get('/{id}',             [FilmMakerController::class, 'show'])->name('show');  // Details Page
+        Route::post('/update-status',   [FilmMakerController::class, 'updateStatus'])->name('update.status');
     });
     Route::prefix('film')->name('film.')->group(function () {
         Route::get('/', [FilmController::class, 'index'])->name('fimindex');  // Listing Page

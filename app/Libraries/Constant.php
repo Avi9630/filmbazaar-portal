@@ -40,7 +40,6 @@ class Constant
         return $data;
     }
 
-
     static function videographyType()
     {
         $data = [['id' => 1, 'name' => 'Animation'], ['id' => 2, 'name' => 'Live Shoot']];
@@ -76,6 +75,26 @@ class Constant
         $data = [['id' => 1, 'name' => 'Film'], ['id' => 2, 'name' => 'TV'], ['id' => 3, 'name' => 'Gaming and Esports'], ['id' => 4, 'name' => 'Radio and Podcasts'], ['id' => 5, 'name' => 'Music and Sound'], ['id' => 6, 'name' => 'Internet Advertising'], ['id' => 7, 'name' => 'Influencer Marketing'], ['id' => 8, 'name' => 'Out of Home Media'], ['id' => 9, 'name' => 'AVGC-XR'], ['id' => 10, 'name' => 'Print (Newspapers, Magazine)'], ['id' => 11, 'name' => 'Live Event'], ['id' => 12, 'name' => 'Startup'], ['id' => 13, 'name' => 'AR/VR']];
         return $data;
     }
+
+    static function sectors()
+    {
+        $sectors =  [
+            1  => 'Film',
+            2  => 'TV/Webseries',
+            3  => 'Gaming and Esports',
+            4  => 'Radio and Podcasts',
+            5  => 'Music and Sound',
+            6  => 'Advertising',
+            7  => 'Influencer Marketing',
+            8  => 'Comics Or Graphics',
+            9  => 'Animation & VFX Services',
+            10  => 'Print (Newspapers, Magazine)',
+            11  => 'Live Event',
+            13  => 'AR/VR'
+        ];
+        return $sectors;
+    }
+
     static function categories()
     {
         $data = [

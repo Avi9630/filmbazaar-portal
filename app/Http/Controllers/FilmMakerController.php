@@ -28,10 +28,16 @@ class FilmMakerController extends Controller
     // Function to list Film Makers with Pagination and Search
     public function index(Request $request)
     {
-        $search = trim($request->input('name'));
-        $email = trim($request->input('email'));
-        $sector = trim($request->input('sector'));
-        $status = trim($request->input('status'));
+        $search         =   trim($request->input('name'));
+        $email          =   trim($request->input('email'));
+        $sector         =   trim($request->input('sector'));
+        $status         =   trim($request->input('status'));
+        $paymentStatus  =   trim($request->input('paymentStatus'));
+
+        if ($paymentStatus === 0) {
+            $paymentStatus = NULL;
+        }
+
         // Fetch Film Makers based on search query, paginated with 10 items per page
         $filmMakers = FilmMaker::when($search, function ($query, $search) {
             return $query->where(function ($query) use ($search) {
@@ -49,8 +55,10 @@ class FilmMakerController extends Controller
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+            ->when($paymentStatus, function ($query, $paymentStatus) {
+                return $query->where('payed', $paymentStatus);
+            })
             ->orderBy('id', 'DESC') // Order by ID in descending order
-
             ->paginate(20);
 
         foreach ($filmMakers as $filmMaker) {
@@ -60,11 +68,11 @@ class FilmMakerController extends Controller
                     // Decode it only if it's a string
                     $filmMaker->sectors = json_decode($filmMaker->sectors, true);
                 }
-
                 // Now map the sectors to their names
                 $filmMaker->sectors = $this->mapSectors($filmMaker->sectors);
             }
         }
+
         $sectors = [
             ['id' => 1, 'name' => 'Film'],
             ['id' => 2, 'name' => 'TV/Webseries'],
