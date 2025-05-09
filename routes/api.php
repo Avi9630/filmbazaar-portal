@@ -25,3 +25,4 @@ Route::get('get-all-pdf-ott',       [ApiController::class, 'ottPdfGenerator'])->
 
 //Send request to B2B
 Route::post('/send-b2b', [CurlController::class, 'sendRequest'])->name('send.b2b');
+Route::post('/send-b2b-buyer', [CurlController::class, 'sendRequestForBuyer'])->name('send.sendRequestForBuyer');

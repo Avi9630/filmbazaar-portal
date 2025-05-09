@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="">
     <h2>Allowed Buyers</h2>
     @if (session('success'))
     <div class="alert alert-success">
@@ -14,14 +14,25 @@
         {{ session('error') }}
     </div>
     @endif
+
     <form method="GET" action="{{ route('allowedbuyers.index') }}">
-        <input type="text" name="search" placeholder="Search by email" value="{{ request('search') }}">
-        <button type="submit">Search</button>
+        <div class="row">
+            <div class="col-md-4">
+
+                <input type="text" name="search" class="form-control" placeholder="Search by email" value="{{ request('search') }}">
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Search</button>
+            </div>
+            <div class="col-md-12 mt-4">
+                <a href="{{ route('allowedbuyers.create') }}" class="btn btn-primary">Add New</a>
+            </div>
+        </div>
+
     </form>
 
-    <a href="{{ route('allowedbuyers.create') }}" class="btn btn-primary">Add New</a>
-
-    <table class="table table-bordered mt-3">
+    <table class="table table-bordered mt-4">
         <thead>
             <tr>
                 <th>ID</th>
@@ -35,7 +46,7 @@
                 <td>{{ $buyer->id }}</td>
                 <td>{{ $buyer->email }}</td>
                 <td>
-                    <a href="{{ route('allowedbuyers.show', $buyer->id) }}" class="btn btn-info">View</a>
+
                     <a href="{{ route('allowedbuyers.edit', $buyer->id) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('allowedbuyers.destroy', $buyer->id) }}" method="POST" style="display:inline-block;">
                         @csrf

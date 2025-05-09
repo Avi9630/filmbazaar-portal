@@ -10,6 +10,10 @@
             <label for="name">Name</label>
             <input type="text" id="name" name="name" class="form-control" value="{{ request('name') }}">
         </div>
+        <div class="col-md-4">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" class="form-control" value="{{ request('company') }}">
+        </div>
 
         <!-- Email Search -->
         <div class="col-md-4">
@@ -48,10 +52,11 @@
     <div class="col-md-12 mt-3">
         <button type="submit" class="btn btn-primary">Search</button>&nbsp;
         <a href="{{ route('film_buyer.index') }}" class="btn btn-primary">Reset</a>
+        <button type="submit" name="download" value="csv" class="btn btn-primary">Download CSV</button>
     </div>
 
     <!-- Hidden Inputs to Retain Pagination -->
-    <input type="hidden" name="page" value="{{ request('page') }}">
+    {{-- <input type="hidden" name="page" value="{{ request('page') }}"> --}}
 </form>
 
 
@@ -101,6 +106,7 @@
 
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('film_buyer.show', $FilmBuyer->id) }}">View Details</a></li>
+                        <!-- <li><button class="dropdown-item activate" data-id="{{ $FilmBuyer->id }}">Convert into Film Maker</button></li> -->
                         @if ($FilmBuyer->status == 2)
                         <li><button class="dropdown-item approved" data-id="{{ $FilmBuyer->id }}">Approved</button></li>
                         @endif
@@ -110,6 +116,15 @@
                         <li><button id="modelopen" type="button" class="dropdown-item modelopen" data-bs-toggle="modal" data-bs-target="#deactivatereason" data-id="{{ $FilmBuyer->id }}">Deactivate</button></li>
                         @endif
 
+                        @if (!empty($allowedBuyer[$FilmBuyer->email]))
+
+                        @if ( $FilmBuyer->asigned_b2b==0)
+                        <li><button class="dropdown-item sendRequestForBuyer" data-id="{{ $FilmBuyer->id }}">Send to
+                                B2B</button></li>
+                        @elseif($FilmBuyer->asigned_b2b==1)
+                        <li><button class="dropdown-item sendRequestForBuyer" data-id="{{ $FilmBuyer->id }}">Re-send to B2B</button></li>
+                        @endif
+                        @endif
 
                     </ul>
                 </div>
@@ -122,7 +137,8 @@
 
 <!-- Pagination Links -->
 <div class="mt-4">
-    {{ $FilmBuyers->links() }}
+    {{ $FilmBuyers->appends(request()->query())->links() }}
+
 </div>
 
 
@@ -255,6 +271,31 @@
                     },
                     error: function(xhr) {
                         alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('.sendRequestForBuyer').click(function() {
+                let filmMakerId = $(this).data('id');
+                $.ajax({
+                    url: @json(route('send.sendRequestForBuyer')), // Ensures proper formatting
+
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: filmMakerId
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status)
+                            alert("Request Sent Successfully!");
+                        else
+                            alert(response.data.msg);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert("Error sending request!");
                     }
                 });
             });

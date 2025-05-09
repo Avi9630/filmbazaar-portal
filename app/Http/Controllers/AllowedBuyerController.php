@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AllowedBuyer;
+use App\Models\FilmBuyer;
 use Illuminate\Http\Request;
 
 class AllowedBuyerController extends Controller
@@ -62,7 +63,9 @@ class AllowedBuyerController extends Controller
         ]);
         try {
             $allowedBuyer = AllowedBuyer::findOrFail($id);
+            FilmBuyer::where('email', $allowedBuyer->email)->update(['payed' => 1]);
             $allowedBuyer->update($request->all());
+            FilmBuyer::where('email', $request->email)->update(['payed' => 2]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -73,6 +76,7 @@ class AllowedBuyerController extends Controller
     public function destroy($id)
     {
         $allowedBuyer = AllowedBuyer::findOrFail($id);
+        FilmBuyer::where('email', $allowedBuyer->email)->update(['payed' => 1]);
         $allowedBuyer->delete();
 
         return redirect()->route('allowedbuyers.index')->with('success', 'Allowed Buyer deleted successfully.');

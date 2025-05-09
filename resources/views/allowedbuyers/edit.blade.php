@@ -8,11 +8,11 @@
         @csrf
         @method('PUT')
 
-       
-        <label>Email:</label>
-        <input type="email" name="email" value="{{ $allowedBuyer->email }}" required>
 
-        <button type="submit">Update</button>
+        <label>Email:</label>
+        <input type="email" class="form-control" name="email" value="{{ $allowedBuyer->email }}" required>
+
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
 @endsection
